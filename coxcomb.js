@@ -39,6 +39,14 @@
       return Math.ceil(Math.cos(Raphael.rad(angle - getAngle(center, x, y)))*Math.sqrt(adjstX*adjstX + adjstY*adjstY) * 5.0/center);
     }
 
+    function getSectorRadius(level) {
+      return (1.0 * chartRadius / levelCount) * level;
+    }
+
+    function getSectorLevel(radius) {
+      return Math.ceil(radius / (1.0 * chartRadius / levelCount));
+    }
+
     function onstart(x, y, e) {
       var center = (chartRadius+2);
       
@@ -84,6 +92,7 @@
               attr({fill: "#000"}).
               drag(onmove, onstart, onend)
       );
+
       _.last(sections).coffeeScore = 1;
       _.last(sections).angle = n+(sectionSize/2);
     });
