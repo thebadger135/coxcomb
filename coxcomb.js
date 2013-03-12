@@ -74,6 +74,7 @@
       var level = getSectorRadius(getLevel(center, x, y, section.angle));
       level = level <= 0 ? 0 : level;
       level = level >= center ? center : level;
+      section.value = level;
       section.attr({path: sector(center, center, level, section.angle - (sectionSize/2), section.angle + (sectionSize/2))});
     }
 
@@ -91,12 +92,13 @@
       // Represents the filled sections
       // TODO initialize sections at correct levels
       sections.push(
-        paper.path(sector(chartRadius+2, chartRadius+2, chartRadius/5.0, n, n+sectionSize)).
-              attr({fill: "#000"}).
+        paper.path(sector(chartRadius+2, chartRadius+2, getSectorRadius(values[n/sectionSize]), n, n+sectionSize)).
+              attr({fill: colors[n/sectionSize], stroke: colors[n/sectionSize]}).
               drag(onmove, onstart, onend)
       );
 
-      _.last(sections).coffeeScore = 1;
+      _.last(sections).value = values[n/sectionSize];
+      _.last(sections).label = labels[n/sectionSize];
       _.last(sections).angle = n+(sectionSize/2);
     });
 
