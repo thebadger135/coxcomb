@@ -36,7 +36,9 @@
     function getLevel(center, x, y, angle) {
       var adjstX = center - x;
       var adjstY = center - y;
-      return Math.ceil(Math.cos(Raphael.rad(angle - getAngle(center, x, y)))*Math.sqrt(adjstX*adjstX + adjstY*adjstY) * 5.0/center);
+      return getSectorLevel(
+        Math.cos(Raphael.rad(angle - getAngle(center, x, y)))*
+        Math.sqrt(adjstX*adjstX + adjstY*adjstY));
     }
 
     function getSectorRadius(level) {
@@ -56,7 +58,7 @@
       } else {
         section = this;
       }
-      var level = getLevel(center, x, y, section.angle) * center / 5.0;
+      var level = getSectorRadius(getLevel(center, x, y, section.angle));
       section.attr({path: sector(center, center, level, section.angle - (sectionSize/2), section.angle + (sectionSize/2))});
     }
 
@@ -69,7 +71,7 @@
       } else {
         section = this;
       }
-      var level = getLevel(center, x, y, section.angle) * center / 5.0;
+      var level = getSectorRadius(getLevel(center, x, y, section.angle));
       level = level <= 0 ? 0 : level;
       level = level >= center ? center : level;
       section.attr({path: sector(center, center, level, section.angle - (sectionSize/2), section.angle + (sectionSize/2))});
@@ -87,6 +89,7 @@
       outline.sectionId = n/sectionSize;
 
       // Represents the filled sections
+      // TODO initialize sections at correct levels
       sections.push(
         paper.path(sector(chartRadius+2, chartRadius+2, chartRadius/5.0, n, n+sectionSize)).
               attr({fill: "#000"}).
