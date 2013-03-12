@@ -4,6 +4,12 @@
         sectionSize = 360/sectionCount,
         sections = [];
 
+    paper.getValues = function() {
+      return _.map(sections, function(section){
+        return section.value;
+      });
+    }
+
     function sector(cx, cy, r, startAngle, endAngle, fill) {
       var rad = Math.PI / 180,
           x1 = cx + r * Math.cos(-startAngle * rad),
@@ -71,10 +77,11 @@
       } else {
         section = this;
       }
-      var level = getSectorRadius(getLevel(center, x, y, section.angle));
+      var val = getLevel(center, x, y, section.angle)
+      var level = getSectorRadius(val);
       level = level <= 0 ? 0 : level;
       level = level >= center ? center : level;
-      section.value = level;
+      section.value = val;
       section.attr({path: sector(center, center, level, section.angle - (sectionSize/2), section.angle + (sectionSize/2))});
     }
 
