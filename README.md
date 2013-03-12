@@ -1,4 +1,4 @@
-# coxcomb
+# Coxcomb.js
 
 Coxcomb.js produces a user editable coxcomb chart using underscore.js and raphael.js
 
