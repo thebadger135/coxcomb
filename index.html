@@ -12,7 +12,9 @@
     <SCRIPT TYPE="text/javascript" src="http://github.com/DmitryBaranovskiy/raphael/raw/master/raphael.js"></SCRIPT>
     <SCRIPT TYPE="text/javascript" src="http://underscorejs.org/underscore.js"></SCRIPT>
     <SCRIPT TYPE="text/javascript" src="https://raw.github.com/thepudding/coxcomb/master/coxcomb.js"></SCRIPT>
-  
+    <style type="text/css">
+      #coxcomb { position: inherit; }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -60,13 +62,8 @@
 <li>
 <code>label</code> is an array of length <code>sectionCount</code> containing labels for each section.</li>
 </ul><p>Returns a Raphael Page object.</p>
-      </section>
-      <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
-      </footer>
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-<h2>demo!</h2>
+      <h2>demo!</h2>
+      <div id="coxcomb"></div>
 <script type="text/javascript">
   Coxcomb(100, 16, 5, 
     ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p'],
@@ -76,5 +73,11 @@
      '#000','#111','#222','#333','#444',
      '#555']);
 </script>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
   </body>
 </html>
