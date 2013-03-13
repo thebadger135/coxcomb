@@ -61,8 +61,8 @@
 
     function onmove(dx, dy, x, y, e) {
       var center = (chartRadius+2);
-      x -= paper.canvas.getBoundingClientRect().left;
-      y -= paper.canvas.getBoundingClientRect().top;
+      x -= paper.canvas.getBoundingClientRect().left+window.scrollX;
+      y -= paper.canvas.getBoundingClientRect().top+window.scrollY;
       var section;
       if(typeof this.sectionId == 'number') { // If an outline was clicked
         section = sections[this.sectionId];
