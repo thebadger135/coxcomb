@@ -56,7 +56,7 @@
     }
 
     function onstart(x, y, e) {
-      return onmove(0,0,x,y,e);
+      return onmove.call(this,0,0,x,y,e);
     }
 
     function onmove(dx, dy, x, y, e) {
