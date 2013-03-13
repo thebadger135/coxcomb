@@ -56,21 +56,13 @@
     }
 
     function onstart(x, y, e) {
-      var center = (chartRadius+2);
-      
-      var section;
-      if(typeof this.sectionId == 'number') { // If an outline was clicked
-        section = sections[this.sectionId];
-      } else {
-        section = this;
-      }
-      var level = getSectorRadius(getLevel(center, x, y, section.angle));
-      section.attr({path: sector(center, center, level, section.angle - (sectionSize/2), section.angle + (sectionSize/2))});
+      return onmove(0,0,x,y,e);
     }
 
     function onmove(dx, dy, x, y, e) {
       var center = (chartRadius+2);
-      
+      x -= paper.canvas.getBoundingClientRect().left;
+      y -= paper.canvas.getBoundingClientRect().top;
       var section;
       if(typeof this.sectionId == 'number') { // If an outline was clicked
         section = sections[this.sectionId];
@@ -111,7 +103,6 @@
 
     // Moves the filled sections to the front to cover the background entirely
     _.each(sections, function(s) {s.toFront()});
-
     return paper;
   };
 })(window);
