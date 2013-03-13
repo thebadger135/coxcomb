@@ -2,7 +2,8 @@
   global.Coxcomb = function (chartRadius, sectionCount, levelCount, labels, values, colors){
     var paper = Raphael("coxcomb", 2*(chartRadius+2), 2*(chartRadius+2)),
         sectionSize = 360/sectionCount,
-        sections = [];
+        sections = [],
+        labelPos = [];
 
     paper.getValues = function() {
       return _.map(sections, function(section){
@@ -99,10 +100,20 @@
       _.last(sections).value = values[n/sectionSize];
       _.last(sections).label = labels[n/sectionSize];
       _.last(sections).angle = n+(sectionSize/2);
+
+      var x = chartRadius+2 + chartRadius * Math.cos(Raphael.rad(n+(sectionSize/2)));
+      var y = chartRadius+2 + chartRadius * Math.sin(Raphael.rad(n+(sectionSize/2)));
+
+      labelPos.push(
+        paper.text(x, y, labels[n/sectionSize])
+      );
+
+
     });
 
     // Moves the filled sections to the front to cover the background entirely
     _.each(sections, function(s) {s.toFront()});
+    _.each(labelPos, function(l) {l.toFront()});
     return paper;
   };
 })(window);
