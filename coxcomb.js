@@ -1,6 +1,6 @@
 (function (global) {
   global.Coxcomb = function (chartRadius, sectionCount, levelCount, labels, values, colors){
-    var paper = Raphael("coxcomb", 3*(chartRadius+50), 3*(chartRadius+50)),
+    var paper = Raphael("coxcomb", 2*(chartRadius+50), 2*(chartRadius+50)),
         sectionSize = 360/sectionCount,
         sections = [],
         labelPos = [];
