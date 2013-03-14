@@ -77,7 +77,7 @@
       var val = getLevel(center, x, y, section.angle)
       var level = getSectorRadius(val);
       level = level <= 0 ? 0 : level;
-      level = level >= center ? center : level;
+      level = level >= center-50 ? center-50 : level;
       section.value = val;
       section.attr({path: sector(center, center, level, section.angle - (sectionSize/2), section.angle + (sectionSize/2))});
     }
