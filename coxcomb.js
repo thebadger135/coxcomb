@@ -1,9 +1,13 @@
 (function (global) {
   global.Coxcomb = function (chartRadius, sectionCount, levelCount, labels, values, colors){
-    var paper = Raphael("coxcomb", 2*(chartRadius+2), 2*(chartRadius+2)),
+    var paper = Raphael("coxcomb", 3*(chartRadius+50), 3*(chartRadius+50)),
         sectionSize = 360/sectionCount,
         sections = [],
         labelPos = [];
+
+    //labels were reverse of their sections because the labels were drawn clockwise
+    //and the sections were being drawn counterclockwise. it's kind of an ugly hack.    
+    labels.reverse();
 
     paper.getValues = function() {
       return _.map(sections, function(section){
@@ -61,7 +65,7 @@
     }
 
     function onmove(dx, dy, x, y, e) {
-      var center = (chartRadius+2);
+      var center = (chartRadius+50);
       x -= paper.canvas.getBoundingClientRect().left+window.scrollX;
       y -= paper.canvas.getBoundingClientRect().top+window.scrollY;
       var section;
@@ -81,10 +85,18 @@
     function onend(e) {
     }
 
+    function getLabel(n) {
+      var newRadius = chartRadius + 25;
+      var x = chartRadius+50 + newRadius * Math.cos(Raphael.rad(n+(sectionSize/2)));
+      var y = chartRadius+50 + newRadius * Math.sin(Raphael.rad(n+(sectionSize/2)));
+
+      return paper.text(x, y, labels[n/sectionSize]);
+    }
+   
     _.each(_.range(0, 360, sectionSize), function (n) {
 
       // Represents the background, and the click area for the chart
-      var outline = paper.path(sector(chartRadius+2, chartRadius+2, chartRadius, n, n+sectionSize)).
+      var outline = paper.path(sector(chartRadius+50, chartRadius+50, chartRadius, n, n+sectionSize)).
                           attr({fill: "#fff", stroke: "#ddd", "stroke-width": 3}).
                           drag(onmove, onstart, onend);
       outline.sectionId = n/sectionSize;
@@ -92,22 +104,21 @@
       // Represents the filled sections
       // TODO initialize sections at correct levels
       sections.push(
-        paper.path(sector(chartRadius+2, chartRadius+2, getSectorRadius(values[n/sectionSize]), n, n+sectionSize)).
+        paper.path(sector(chartRadius+50, chartRadius+50, getSectorRadius(values[n/sectionSize]), n, n+sectionSize)).
               attr({fill: colors[n/sectionSize], stroke: colors[n/sectionSize]}).
               drag(onmove, onstart, onend)
+      );
+
+      //put labels on graph
+      labelPos.push(
+        getLabel(n)
       );
 
       _.last(sections).value = values[n/sectionSize];
       _.last(sections).label = labels[n/sectionSize];
       _.last(sections).angle = n+(sectionSize/2);
-
-      var x = chartRadius+2 + chartRadius * Math.cos(Raphael.rad(n+(sectionSize/2)));
-      var y = chartRadius+2 + chartRadius * Math.sin(Raphael.rad(n+(sectionSize/2)));
-
-      labelPos.push(
-        paper.text(x, y, labels[n/sectionSize])
-      );
-
+      
+      
 
     });
 
